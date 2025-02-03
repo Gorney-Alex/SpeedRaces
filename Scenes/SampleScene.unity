@@ -152,11 +152,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadArrayVersions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1415141179021910944, guid: 0455b093dc13f7545a3bafcb6a8f4baf, type: 3}
+  - {fileID: 7329201007081937484, guid: aee297006ee651149a3a391567d3a8e1, type: 3}
+  - {fileID: 7329201007081937484, guid: 3ac7b69c6e8e1d34d9493abb3040d8b7, type: 3}
+  - {fileID: 7168594060486549818, guid: 40176db80dd92a64eb73d7c2dca4668e, type: 3}
+  - {fileID: 7168594060486549818, guid: f283d95f767027f44909940fd4e8a617, type: 3}
 --- !u!4 &635082836
 Transform:
   m_ObjectHideFlags: 0
