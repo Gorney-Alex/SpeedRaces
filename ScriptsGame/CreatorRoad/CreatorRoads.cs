@@ -1,101 +1,72 @@
-// Gorney-Alex code
-
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CreatorRoads : MonoBehaviour
 {
-    [SerializeField] private int maxRoadsInWorld = 15;
     [SerializeField] private GameObject[] roadArrayVersions = new GameObject[5];
-    // StraightRoad[0], RoadBelow[1], RoadAbove[2], Road90Twice[3], Road90[4]
+    // StraightRoad[0], RoadBelow[1], RoadAbove[2], Road90Twice[3], Road-90Twice[4]
+    [SerializeField] private int maxRoadsInWorld = 15;
 
     private List<GameObject> roadList = new List<GameObject>();
-
-    private Vector3 nextPositionRoad = new Vector3(0f, 0f, 0f);
-
-    private bool isMaxRoadReached = false;
-
+    private Vector3 nextPositionRoad = Vector3.zero;
 
     private void Start()
     {
-        CreateOneStarightRoad();
+        GenerateWorldRoads();
+        Debug.Log("Creator is starting");
     }
 
-    private void Update()
-    {   
-        if (!isMaxRoadReached)
+    private void GenerateWorldRoads()
+    {
+        CreateRoad(0, 1);
+
+        for (int i = 1; i < maxRoadsInWorld; i++)
         {
-            if (MaxCountRoads()) 
-            {
-                isMaxRoadReached = true;
-                CreatorTheLast5Roads();
-                Debug.Log("Max count of roads reached!");
-            } 
-            else {
-                CreateRandomRoads();
-            }
+            int randomIndex = Random.Range(0, roadArrayVersions.Length);
+            CreateRoad(randomIndex, 1);
+        }
+
+        CreateRoad(0, 5);
+        Debug.Log("Road generation is ended!");
+    }
+
+    private void CreateRoad(int index, int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            GameObject newRoad = Instantiate(roadArrayVersions[index], nextPositionRoad, Quaternion.identity);
+            newRoad.name = index.ToString();
+            roadList.Add(newRoad);
+            UpdateNextPosition(index);
         }
     }
 
-    private void CreateOneStarightRoad()
+    private void UpdateNextPosition(int roadIndex)
     {
-        GameObject newRoad = Instantiate(roadArrayVersions[0], nextPositionRoad, Quaternion.identity);
-        newRoad.name = "0";
-        roadList.Add(newRoad);
-        DistanceDeterminationZ();
-    }
+        const float width = 22f;
+        const float length = 200f;
+        const float length90Twice = 400f;
 
-    private void CreatorTheLast5Roads()
-    {
-        for(int i = 0; i < 5; i++)
+        switch (roadIndex)
         {
-            CreateOneStarightRoad();
-        }
-    }
-
-    private void CreateRandomRoads()
-    {
-        int randomIndexRoad = Random.Range(0, 5);
-        GameObject newRoad = Instantiate(roadArrayVersions[randomIndexRoad], nextPositionRoad, Quaternion.identity);
-        newRoad.name = randomIndexRoad.ToString();
-        roadList.Add(newRoad);
-        DistanceDeterminationZ();
-    }
-
-    private void DistanceDeterminationZ()
-    {
-        float width = 22f;
-        float length = 200f;
-        float length90Twice = 400f;
-
-        GameObject lastRoad = roadList[roadList.Count - 1];
-
-        switch (lastRoad.name)
-        {
-            case "0":
+            case 0:
                 nextPositionRoad += new Vector3(0f, 0f, length);
                 break;
-            case "1":
+            case 1:
                 nextPositionRoad += new Vector3(0f, -width, length);
                 break;
-            case "2":
+            case 2:
                 nextPositionRoad += new Vector3(0f, width, length);
                 break;
-            case "3":
+            case 3:
                 nextPositionRoad += new Vector3(length90Twice, 0f, length90Twice);
                 break;
-            case "4":
+            case 4:
                 nextPositionRoad += new Vector3(-length90Twice, 0f, length90Twice);
                 break;
             default:
-                Debug.Log("error in DistanceDeterminationZ");
+                Debug.LogError("Неизвестный индекс дороги в UpdateNextPosition");
                 break;
         }
-    }
-
-    private bool MaxCountRoads()
-    {
-        if(roadList.Count >= maxRoadsInWorld) { return true; }
-        return false;
     }
 }
