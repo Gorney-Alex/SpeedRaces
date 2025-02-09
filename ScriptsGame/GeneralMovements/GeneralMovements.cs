@@ -86,7 +86,7 @@ public class GeneralMovements : MonoBehaviour
 
     public void CheckIfGrounded()
     {
-        float raycastDistance = 3f;
+        const int raycastDistance = 4;
         Debug.DrawRay(transform.position, -transform.forward * raycastDistance, Color.red);
         isGrounded = Physics.Raycast(transform.position, -transform.forward, raycastDistance);
     }
@@ -114,5 +114,17 @@ public class GeneralMovements : MonoBehaviour
     {
         Quaternion targetRotation = Quaternion.Euler(0f, -tiltAngle, 0f);
         carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
+    }
+
+    public void CheckForWall()
+    {
+        const int rayDistance = 4;
+        Debug.DrawRay(transform.position, transform.up * rayDistance, Color.red);
+        Debug.DrawRay(transform.position, -transform.up * rayDistance, Color.red);
+        if (Physics.Raycast(transform.position, transform.up, rayDistance) || Physics.Raycast(transform.position, -transform.up, rayDistance))
+        {
+            currentSpeed = 0f;
+            Debug.Log("Стена обнаружена!");
+        }
     }
 }

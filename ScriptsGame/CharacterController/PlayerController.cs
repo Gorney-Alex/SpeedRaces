@@ -1,10 +1,10 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerController : GeneralMovements
 {
     private void FixedUpdate()
     {
+        CheckForWall();
         CheckIfGrounded();
 
         if (Input.GetKey(KeyCode.W) && isGrounded == true)

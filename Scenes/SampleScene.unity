@@ -476,6 +476,7 @@ MonoBehaviour:
   currentSpeed: 0
   isGrounded: 0
   rigidbodyCar: {fileID: 1637450015}
+  carModel: {fileID: 1339231149}
 --- !u!54 &1637450015
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -485,7 +486,7 @@ Rigidbody:
   m_GameObject: {fileID: 1637450012}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0.1
+  m_Drag: 1
   m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -539,8 +540,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.3732738
-  m_Center: {x: 0, y: 0.037904263, z: 0.06109333}
+  m_Radius: 2.8487546
+  m_Center: {x: 0, y: 0.037904263, z: -0.4143877}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
