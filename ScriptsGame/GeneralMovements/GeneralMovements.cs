@@ -5,7 +5,7 @@ public class GeneralMovements : MonoBehaviour
     private float maxSpeedFoward = 50f;
     private float maxSpeedBackward = 30f;
     private float acceleration = 1.5f;
-    private float rotationSpeed = 30f;
+    public float rotationSpeed = 30f;
     public float currentSpeed = 0f;
     private float tiltSpeed = 1f;
     private float tiltAngle = 30f;
@@ -14,8 +14,8 @@ public class GeneralMovements : MonoBehaviour
     private bool direction = false;
     // false = foward, true = backwards
     public bool isGrounded = false;
-    public Rigidbody rigidbodyCar;
-    public GameObject carModel;
+    private Rigidbody rigidbodyCar;
+    [SerializeField] private GameObject carModel;
 
     private void Start()
     {
@@ -100,7 +100,7 @@ public class GeneralMovements : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(-tiltAngle, 0f, 0f);
         carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
     }
-        public void TiltCarModelStart()
+    public void TiltCarModelStart()
     {
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, 0f);
         carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
@@ -118,7 +118,7 @@ public class GeneralMovements : MonoBehaviour
 
     public void CheckForWall()
     {
-        const int rayDistance = 4;
+        const int rayDistance = 5;
         Debug.DrawRay(transform.position, transform.up * rayDistance, Color.red);
         Debug.DrawRay(transform.position, -transform.up * rayDistance, Color.red);
         if (Physics.Raycast(transform.position, transform.up, rayDistance) || Physics.Raycast(transform.position, -transform.up, rayDistance))
