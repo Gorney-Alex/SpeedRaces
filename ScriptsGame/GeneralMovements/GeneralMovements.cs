@@ -5,23 +5,22 @@ public class GeneralMovements : MonoBehaviour
     private float maxSpeedFoward = 50f;
     private float maxSpeedBackward = 30f;
     private float acceleration = 1.5f;
-    public float rotationSpeed = 30f;
-    public float currentSpeed = 0f;
+    private float rotationSpeed = 30f;
+    [SerializeField] private float currentSpeed = 0f;
     private float tiltSpeed = 1f;
     private float tiltAngle = 30f;
 
     private Vector3 movement = new Vector3();
     private bool direction = false;
     // false = foward, true = backwards
-    public bool isGrounded = false;
-    private Rigidbody rigidbodyCar;
-    [SerializeField] private GameObject carModel;
+    [SerializeField] protected bool isGrounded = false;
+    [SerializeField] protected GameObject carModel;
+    [SerializeField] protected Rigidbody rigidbodyCar;
 
     private void Start()
     {
         rigidbodyCar = GetComponent<Rigidbody>();
     }
-
 
     public void MoveForward()
     {
@@ -86,7 +85,7 @@ public class GeneralMovements : MonoBehaviour
 
     public void CheckIfGrounded()
     {
-        const int raycastDistance = 4;
+        const int raycastDistance = 3;
         Debug.DrawRay(transform.position, -transform.forward * raycastDistance, Color.red);
         isGrounded = Physics.Raycast(transform.position, -transform.forward, raycastDistance);
     }
