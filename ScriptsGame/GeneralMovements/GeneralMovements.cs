@@ -27,13 +27,13 @@ public class GeneralMovements : MonoBehaviour
         TiltCarModelFoward();
         if (currentSpeed >= 0f && direction == true)
         {
-            currentSpeed -= Mathf.Lerp(currentSpeed, maxSpeedBackward, Time.deltaTime * acceleration);
-            movement = transform.up * currentSpeed * Time.deltaTime;
+            currentSpeed -= Mathf.Lerp(currentSpeed, maxSpeedBackward, Time.fixedDeltaTime * acceleration);
+            movement = transform.up * currentSpeed * Time.fixedDeltaTime;
             rigidbodyCar.MovePosition(rigidbodyCar.position + movement);
         }
         direction = false;
-        currentSpeed = Mathf.Lerp(currentSpeed, maxSpeedFoward, Time.deltaTime * acceleration);
-        movement = -transform.up * currentSpeed * Time.deltaTime;
+        currentSpeed = Mathf.Lerp(currentSpeed, maxSpeedFoward, Time.fixedDeltaTime * acceleration);
+        movement = -transform.up * currentSpeed * Time.fixedDeltaTime;
         rigidbodyCar.MovePosition(rigidbodyCar.position + movement);
     }
 
@@ -42,13 +42,13 @@ public class GeneralMovements : MonoBehaviour
         TiltCarModelBackward();
         if (currentSpeed >= 0f && direction == false)
         {
-            currentSpeed -= Mathf.Lerp(currentSpeed, maxSpeedBackward, Time.deltaTime * acceleration);
-            movement = -transform.up * currentSpeed * Time.deltaTime;
+            currentSpeed -= Mathf.Lerp(currentSpeed, maxSpeedBackward, Time.fixedDeltaTime * acceleration);
+            movement = -transform.up * currentSpeed * Time.fixedDeltaTime;
             rigidbodyCar.MovePosition(rigidbodyCar.position + movement);
         }
         direction = true;
-        currentSpeed = Mathf.Lerp(currentSpeed, maxSpeedBackward, Time.deltaTime * acceleration);
-        movement = transform.up * currentSpeed * Time.deltaTime;
+        currentSpeed = Mathf.Lerp(currentSpeed, maxSpeedBackward, Time.fixedDeltaTime * acceleration);
+        movement = transform.up * currentSpeed * Time.fixedDeltaTime;
         rigidbodyCar.MovePosition(rigidbodyCar.position + movement);
     }
 
@@ -56,15 +56,15 @@ public class GeneralMovements : MonoBehaviour
     {
         if (direction == false)
         {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, acceleration * Time.deltaTime);
-            movement = -transform.up * currentSpeed * Time.deltaTime;
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, acceleration * Time.fixedDeltaTime);
+            movement = -transform.up * currentSpeed * Time.fixedDeltaTime;
             rigidbodyCar.MovePosition(rigidbodyCar.position + movement);
             TiltCarModelStart();
         }
         else if (direction == true)
         {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, acceleration * Time.deltaTime);
-            movement = transform.up * currentSpeed * Time.deltaTime;
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, acceleration * Time.fixedDeltaTime);
+            movement = transform.up * currentSpeed * Time.fixedDeltaTime;
             rigidbodyCar.MovePosition(rigidbodyCar.position + movement);
             TiltCarModelStart();
         }
@@ -72,13 +72,13 @@ public class GeneralMovements : MonoBehaviour
 
     public void RotateLeft()
     {
-        Quaternion turnRotation = Quaternion.Euler(0f, 0f, -rotationSpeed * Time.deltaTime);
+        Quaternion turnRotation = Quaternion.Euler(0f, 0f, -rotationSpeed * Time.fixedDeltaTime);
         rigidbodyCar.MoveRotation(rigidbodyCar.rotation * turnRotation);
         TiltCarModelLeft();
     }
     public void RotateRight()
     {
-        Quaternion turnRotation = Quaternion.Euler(0f, 0f, rotationSpeed * Time.deltaTime);
+        Quaternion turnRotation = Quaternion.Euler(0f, 0f, rotationSpeed * Time.fixedDeltaTime);
         rigidbodyCar.MoveRotation(rigidbodyCar.rotation * turnRotation);
         TiltCarModelRight();
     }
@@ -92,35 +92,34 @@ public class GeneralMovements : MonoBehaviour
     public void TiltCarModelFoward()
     {
         Quaternion targetRotation = Quaternion.Euler(tiltAngle, 0f, 0f);
-        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
+        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.fixedDeltaTime * tiltSpeed);
     }
     public void TiltCarModelBackward()
     {
         Quaternion targetRotation = Quaternion.Euler(-tiltAngle, 0f, 0f);
-        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
+        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.fixedDeltaTime * tiltSpeed);
     }
     public void TiltCarModelStart()
     {
         Quaternion targetRotation = Quaternion.Euler(0f, 0f, 0f);
-        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
+        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.fixedDeltaTime * tiltSpeed);
     }
     public void TiltCarModelRight()
     {
         Quaternion targetRotation = Quaternion.Euler(0f, tiltAngle, 0f);
-        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
+        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.fixedDeltaTime * tiltSpeed);
     }
     public void TiltCarModelLeft()
     {
         Quaternion targetRotation = Quaternion.Euler(0f, -tiltAngle, 0f);
-        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
+        carModel.transform.localRotation = Quaternion.Lerp(carModel.transform.localRotation, targetRotation, Time.fixedDeltaTime * tiltSpeed);
     }
 
     public void CheckForWall()
     {
-        const int rayDistance = 5;
-        Debug.DrawRay(transform.position, transform.up * rayDistance, Color.red);
+        const int rayDistance = 4;
         Debug.DrawRay(transform.position, -transform.up * rayDistance, Color.red);
-        if (Physics.Raycast(transform.position, transform.up, rayDistance) || Physics.Raycast(transform.position, -transform.up, rayDistance))
+        if (Physics.Raycast(transform.position, -transform.up, rayDistance))
         {
             currentSpeed = 0f;
             Debug.Log("Стена обнаружена!");

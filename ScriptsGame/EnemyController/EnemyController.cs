@@ -4,8 +4,10 @@ public class EnemyController : GeneralMovements
 {
     private void FixedUpdate()
     {
-        MoveEnemyAlgoritm();
+        CheckForWall();
         CheckWay();
+        MoveEnemyAlgoritm();
+        SlowDown();
     }
 
     private void MoveEnemyAlgoritm()
@@ -19,7 +21,7 @@ public class EnemyController : GeneralMovements
 
     private void CheckWay()
     {
-        const int raycastDistance = 5;
+        const int raycastDistance = 7;
         Debug.DrawRay(transform.position, transform.right * raycastDistance, Color.red);
         
         Debug.DrawRay(transform.position, -transform.right * raycastDistance, Color.red);

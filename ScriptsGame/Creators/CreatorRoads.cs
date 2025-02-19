@@ -3,17 +3,22 @@ using UnityEngine;
 
 public class CreatorRoads : MonoBehaviour
 {
-    [SerializeField] private GameObject[] roadArrayVersions = new GameObject[5];
+    [HideInInspector] [SerializeField] private GameObject[] roadArrayVersions = new GameObject[5];
     // StraightRoad[0], RoadBelow[1], RoadAbove[2], Road90Twice[3], Road-90Twice[4]
-    [SerializeField] private int maxRoadsInWorld = 15;
+    [HideInInspector] [SerializeField] private int maxRoadsInWorld = 15;
 
-    private List<GameObject> roadList = new List<GameObject>();
+    private static List<GameObject> roadList = new List<GameObject>();
     private Vector3 nextPositionRoad = Vector3.zero;
 
     private void Start()
     {
         GenerateWorldRoads();
         Debug.Log("Creator is starting");
+    }
+
+    public List<GameObject> GetRoadList()
+    {
+        return roadList;
     }
 
     private void GenerateWorldRoads()
