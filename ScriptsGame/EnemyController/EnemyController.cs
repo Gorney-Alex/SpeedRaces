@@ -23,8 +23,8 @@ public class EnemyController : GeneralMovements
     {
         const int raycastDistance = 7;
         Debug.DrawRay(transform.position, transform.right * raycastDistance, Color.red);
-        
         Debug.DrawRay(transform.position, -transform.right * raycastDistance, Color.red);
+
         if (Physics.Raycast(transform.position, transform.right, raycastDistance))
         {
             RotateLeft();

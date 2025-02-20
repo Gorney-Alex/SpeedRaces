@@ -16,10 +16,13 @@ public class CreatorBarricades : CreatorRoads
     {
         foreach (GameObject road in roadList)
         {
-            Vector3 roadPositionOld = road.transform.position;
-            UpdateBarricadePosition(road.name, roadPositionOld);
-            Instantiate(barricade, barricadePosition, Quaternion.Euler(-90f, 0f, 0f));
-            Debug.Log("Created Barricade");
+            if (road.name == "0" || road.name == "1" || road.name == "2")
+            {
+                Vector3 roadPositionOld = road.transform.position;
+                UpdateBarricadePosition(road.name, roadPositionOld);
+                Instantiate(barricade, barricadePosition, Quaternion.Euler(0f, 0f, 0f));
+                Debug.Log("Created Barricade"); 
+            }
         }
     }
 
@@ -27,8 +30,9 @@ public class CreatorBarricades : CreatorRoads
     {
         int randomLocation = Random.Range(0, 2);
         const int length = 100;
-        const int height = 14;
-        const int width = 6;
+        const int heightBelow = -12;
+        const int heightAbove = 10;
+        const int width = 9;
 
         switch(roadName)
         {
@@ -46,23 +50,26 @@ public class CreatorBarricades : CreatorRoads
             case "1":
             if (randomLocation == 1)
             {
-                barricadePosition = new Vector3(roadPositionOld.x + width, roadPositionOld.y - height, roadPositionOld.z + length);
+                barricadePosition = new Vector3(roadPositionOld.x + width, roadPositionOld.y + heightBelow, roadPositionOld.z + length);
             }
             else
             {
-                barricadePosition = new Vector3(roadPositionOld.x - width, roadPositionOld.y - height, roadPositionOld.z + length);
+                barricadePosition = new Vector3(roadPositionOld.x - width, roadPositionOld.y + heightBelow, roadPositionOld.z + length);
             }
             break;
 
             case "2":
             if (randomLocation == 1)
             {
-                barricadePosition = new Vector3(roadPositionOld.x + width, roadPositionOld.y + height, roadPositionOld.z + length);
+                barricadePosition = new Vector3(roadPositionOld.x + width, roadPositionOld.y + heightAbove, roadPositionOld.z + length);
             }
             else
             {
-                barricadePosition = new Vector3(roadPositionOld.x - width, roadPositionOld.y + height, roadPositionOld.z + length);
+                barricadePosition = new Vector3(roadPositionOld.x - width, roadPositionOld.y + heightAbove, roadPositionOld.z + length);
             }
+            break;
+
+            default:
             break;
         }
 

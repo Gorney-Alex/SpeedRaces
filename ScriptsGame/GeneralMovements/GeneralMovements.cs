@@ -85,7 +85,7 @@ public class GeneralMovements : MonoBehaviour
 
     public void CheckIfGrounded()
     {
-        const int raycastDistance = 3;
+        const int raycastDistance = 4;
         Debug.DrawRay(transform.position, -transform.forward * raycastDistance, Color.red);
         isGrounded = Physics.Raycast(transform.position, -transform.forward, raycastDistance);
     }
