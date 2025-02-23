@@ -20,7 +20,7 @@ public class CreatorBarricades : CreatorRoads
             {
                 Vector3 roadPositionOld = road.transform.position;
                 UpdateBarricadePosition(road.name, roadPositionOld);
-                Instantiate(barricade, barricadePosition, Quaternion.Euler(0f, 0f, 0f));
+                Instantiate(barricade, barricadePosition, Quaternion.identity);
                 Debug.Log("Created Barricade"); 
             }
         }
