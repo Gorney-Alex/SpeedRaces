@@ -21,19 +21,27 @@ public class EnemyController : GeneralMovements
 
     private void CheckWay()
     {
-        const int raycastDistance = 7;
-        Debug.DrawRay(transform.position, transform.right * raycastDistance, Color.red);
-        Debug.DrawRay(transform.position, -transform.right * raycastDistance, Color.red);
+        const int raycastDistanceLeftRight = 7;
+        const int raycastDistanceFoward = 10;
+        Debug.DrawRay(transform.position, transform.right * raycastDistanceLeftRight, Color.red);
+        Debug.DrawRay(transform.position, -transform.right * raycastDistanceLeftRight, Color.red);
 
-        if (Physics.Raycast(transform.position, transform.right, raycastDistance))
+        Debug.DrawRay(transform.position, -transform.up * raycastDistanceFoward, Color.blue);
+
+        if (Physics.Raycast(transform.position, transform.right, raycastDistanceLeftRight))
         {
             RotateLeft();
             Debug.Log("Left");
         }
-        else if (Physics.Raycast(transform.position, -transform.right, raycastDistance))
+        else if (Physics.Raycast(transform.position, -transform.right, raycastDistanceLeftRight))
         {
             RotateRight();
             Debug.Log("Right");
+        }
+
+        if (Physics.Raycast(transform.position, -transform.up, raycastDistanceFoward))
+        {
+            MoveBackward();
         }
     }
 
