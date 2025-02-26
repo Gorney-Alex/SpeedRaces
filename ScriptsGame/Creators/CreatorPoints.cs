@@ -1,3 +1,5 @@
+// Gorney-Alex script
+
 using System.Collections.Generic;
 using UnityEngine;
 

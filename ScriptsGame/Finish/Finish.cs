@@ -1,3 +1,5 @@
+// Gorney-Alex script
+
 using UnityEngine;
 
 public class Finish : MonoBehaviour
