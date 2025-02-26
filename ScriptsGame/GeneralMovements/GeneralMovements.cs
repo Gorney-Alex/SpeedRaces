@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GeneralMovements : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GeneralMovements : MonoBehaviour
     // false = foward, true = backwards
     [SerializeField] protected bool isGrounded = false;
     [SerializeField] protected GameObject carModel;
+    [SerializeField] protected GameObject headLights;
     [SerializeField] protected Rigidbody rigidbodyCar;
 
     private void Start()
@@ -24,6 +26,7 @@ public class GeneralMovements : MonoBehaviour
 
     public void MoveForward()
     {
+        headLights.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
         TiltCarModelFoward();
         if (currentSpeed >= 0f && direction == true)
         {
@@ -39,6 +42,9 @@ public class GeneralMovements : MonoBehaviour
 
     public void MoveBackward()
     {
+        Color color = Color.red;
+        headLights.GetComponent<Renderer>().material.SetColor("_EmissionColor", color * 3);
+        headLights.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
         TiltCarModelBackward();
         if (currentSpeed >= 0f && direction == false)
         {

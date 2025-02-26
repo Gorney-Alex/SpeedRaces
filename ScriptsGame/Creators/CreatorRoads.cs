@@ -5,6 +5,8 @@ public class CreatorRoads : MonoBehaviour
 {
     [HideInInspector] [SerializeField] private GameObject[] roadArrayVersions = new GameObject[5];
     // StraightRoad[0], RoadBelow[1], RoadAbove[2], Road90Twice[3], Road-90Twice[4]
+
+    [SerializeField] private GameObject finishFlag;
     [HideInInspector] [SerializeField] private int maxRoadsInWorld = 15;
 
     private static List<GameObject> roadList = new List<GameObject>();
@@ -13,7 +15,14 @@ public class CreatorRoads : MonoBehaviour
     private void Start()
     {
         GenerateWorldRoads();
+        SpawnFinishFlag();
         Debug.Log("Creator is starting");
+    }
+    
+    private void SpawnFinishFlag()
+    {
+        Vector3 lastRoadPosition = roadList[roadList.Count - 2].transform.position;
+        Instantiate(finishFlag, lastRoadPosition, Quaternion.identity);
     }
 
     public List<GameObject> GetRoadList()
