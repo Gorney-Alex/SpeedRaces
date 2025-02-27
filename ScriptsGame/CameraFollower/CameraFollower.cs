@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class CameraFollower : MonoBehaviour
 {
-    [SerializeField] private Transform target; // Игрок
-    [SerializeField] private Vector3 offset = new Vector3(0, 10, -10); // Смещение камеры
-    [SerializeField] private float smoothSpeed = 5f; // Скорость сглаживания
+    [SerializeField] private Transform target;
+    [SerializeField] private Vector3 offset = new Vector3(0, 10, -10);
+    [SerializeField] private float smoothSpeed = 1f;
+    [SerializeField] private float fixedHeight = 1f;
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (target == null) return;
 
-        // Определяем целевую позицию (НЕ зависящую от поворота)
-        Vector3 desiredPosition = target.position + target.transform.forward * offset.z + Vector3.up * offset.y;
+        Vector3 desiredPosition = target.position + target.rotation * offset;
+        desiredPosition.y = target.position.y + fixedHeight;
 
-        // Отключаем движение по оси Y, используя текущую позицию камеры по Y
-        desiredPosition.y = transform.position.y;
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.fixedDeltaTime);
 
-        // Плавно перемещаем камеру
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-
-        // Камера всегда смотрит на игрока (фикс переворота)
-        transform.LookAt(target.position + Vector3.up * 2f); // Можно подстроить значение 2f, если нужно
+        Quaternion targetRotation = Quaternion.Euler(10f, target.eulerAngles.y, 0f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, smoothSpeed * Time.fixedDeltaTime);
     }
 }
